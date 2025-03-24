@@ -28,7 +28,6 @@ onMounted(()=>{
     username.value = localStorage.getItem("username")
     password.value = localStorage.getItem("password")
 }
-
 )
 </script>
 

@@ -4,7 +4,7 @@ import Login from '@/views/loginView.vue'
 import HomePage from '@/views/homePage.vue'
 import User from '@/views/userView.vue'
 import allQA from '@/views/q-aView.vue'
-
+import test from '@/views/test.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -29,6 +29,13 @@ const router = createRouter({
       name: 'allQA',
       component: allQA
     },
+
+    {
+      path: '/test',
+      name: 'test',
+      component: test
+    },
+
     // {
     //   path: '/about',
     //   name: 'about',

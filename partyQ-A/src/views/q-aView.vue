@@ -5,7 +5,7 @@ import { ref } from 'vue';
 const activeTab = ref('Tab1');
 
 const tabs = ref([
-  { id: 'Tab1', name: '所有问答', content: { title: '内容1', description: '这是标签1的内容。' } },
+  { id: 'Tab1', name: '所有问答', content: { title: '主炮射击技巧', description: '这是标签1的内容。' } },
   { id: 'Tab2', name: '已完成问答', content: { title: '内容2', description: '这是标签2的内容。' } },
   { id: 'Tab3', name: '往期问答', content: { title: '内容3', description: '这是标签3的内容。' } },
 ]);
@@ -27,7 +27,7 @@ const openTab = (tabId) => {
     <div v-for="(tab, index) in tabs" :key="index" :id="tab.id" :class="['tab-content', { active: activeTab === tab.id }]">
         <div class="present">
             <div id="first-line">
-                <p>问答名称: {{ tab.content.questionName }}</p>
+                <p>问答名称: {{ tab.content.title }}</p>
                 <p>状态: {{ tab.content.status }}</p>
             </div>
             <div id="second-line">

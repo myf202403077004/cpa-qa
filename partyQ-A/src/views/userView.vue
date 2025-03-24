@@ -21,8 +21,6 @@ const fetchData = async () => {
   partyBranch.value = '土建与水利学院XX党支部';
 };
 
-
-
 onMounted(() => {
   fetchData();
 });
