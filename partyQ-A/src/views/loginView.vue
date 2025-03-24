@@ -3,12 +3,12 @@ import Login from "@/components/login.vue";
 </script>
 
 <template>
-    <Login />
-
-    <div class="imgDiv">
-        <img class="imgStyle" src="../assets/Frame 418.png" alt="">
-        <img class="picStyle" src="../assets/Frame 417.png" alt="">
+    <div class="imgDiv"></div>
+    <div class="log">
+        
+        <Login />
     </div>
+
 </template>
 
 <style>
@@ -17,28 +17,22 @@ body {
 }
 
 .imgDiv {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    z-index: -1;
-    margin: 0;
-    padding: 0;
-    display: block;
+    position: relative;
+    width: auto;
+    height: 844px;
+    z-index: -10000;
+    background-image: url('../assets/Frame418.png'), url('../assets/Frame417.png');
+    background-size: 390px 402px,390px 455px;
+    background-position: top,bottom;
+    background-attachment: scroll, scroll;
+    background-repeat: no-repeat, no-repeat;
 }
 
-.imgStyle {
-    display: block;
-    width: 100%;
-    height: 45%;
-    margin: 0;
-    padding: 0;
-}
-
-.picStyle {
-    display: block;
-    width: 100%;
-    height: 55%;
+.log{
+    position: relative;
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    /* 可选：垂直居中 */
+    align-items: center;
 }
 </style>

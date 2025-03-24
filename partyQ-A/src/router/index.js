@@ -4,6 +4,7 @@ import Login from '@/views/loginView.vue'
 import HomePage from '@/views/homePage.vue'
 import User from '@/views/userView.vue'
 import allQA from '@/views/q-aView.vue'
+import Rank from '@/views/rankView.vue'
 
 
 const router = createRouter({
@@ -25,18 +26,15 @@ const router = createRouter({
       component: User
     },
     {
+      path: '/rank',
+      name: 'rank',
+      component: Rank
+    },
+    {
       path: '/allQA',
       name: 'allQA',
       component: allQA
     },
-    // {
-    //   path: '/about',
-    //   name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-    //   component: () => import('../views/AboutView.vue'),
-    // },
   ],
 })
 

@@ -1,6 +1,5 @@
 <script setup>
 import router from '@/router';
-import tab from '../components/tab.vue'
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
@@ -30,24 +29,31 @@ onMounted(() => {
 </script>
 
 <template>
-    <tab />
-    
-    <img src="../assets/箭头.png" alt="" style="width: 20px;height: 40px;" class="arrow" @click="() => {router.push('/homepage')}">
+    <!-- tab栏 -->
+    <div class="tab">
+        <img src="../assets/箭头.png" alt="" style="width: 20px;height: 40px;" class="arrow" @click="() => {router.push('/homepage')}">
+        <img src="../assets/xx.png" alt="">
+    </div>
 
+    <!-- 个人信息展示 -->
     <div class="basic">    
         <div class="information" style="font-size: 24px;">{{id}}</div>
         <div class="information" style="margin-top: 20px;font-size: 15px;">{{ partyBranch}}</div>
     </div>
-
+    
+    <!-- 三个功能 -->
     <div class="function">
-        <div class="function-item">
-            <img src="../assets/2 .png" alt="" style="width: 45px;height: 62px;">
+        <div class="function-item" @click="() => {router.push('/rank')}">
+            <img src="../assets/1.png" alt="">
+            <div style="font-size: 15px;">排行榜</div>
         </div>
         <div class="function-item" id="mid" @click="() => {router.push('/allQA')}">
-            <img src="../assets/1.png" alt="" style="width: 59px;height: 62px;">
+            <img src="../assets/2.png" alt="">
+            <div style="font-size: 15px;">所有问答</div>
         </div>
         <div class="function-item">
-            <img src="../assets/3.png" alt="" style="width: 88px;height: 62px;">
+            <img src="../assets/3.png" alt="">
+            <div style="font-size: 15px;">更改个人信息</div>
         </div>
     </div>
 </template>
@@ -56,6 +62,25 @@ onMounted(() => {
 body{
     margin: 0;
     padding: 0;
+}
+
+.tab{
+    width: 100%;
+    height: 61px;
+    background-color: #9C0C13;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 22px;
+    box-sizing: border-box;
+}
+
+.tab img{
+    width: 105px;
+    height: 32px;
+    line-height: 61px;
+    position: relative;
+    top: 17px;
+    left: 9px;
 }
 
 .arrow{
@@ -85,22 +110,24 @@ body{
     border-radius: 5px;
     box-shadow: 0 4px 10px #515151a2;
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    padding-left: 6%;
-    padding-right: 4%;
+    align-items: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    box-sizing: border-box;
+}
+
+.function-item img{
+    width:40px;
+    height: 40px;
 }
 
 .function-item{
-    display: block;
-    align-items: center;
-    line-height: 150px;
+    width: 90px;
+    height: 62px;
     display: flex;
-    align-items: center; 
-}
-
-#mid{
-    /* flex: 0 1 auto; */
-    padding-left: 25px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 </style>

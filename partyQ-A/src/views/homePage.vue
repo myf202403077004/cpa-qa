@@ -4,10 +4,7 @@ import tab from '@/components/tab.vue';
 
 <template>
     <tab />
-    <div class="imgDiv">
-        <img class="imgStyle" src="../assets/Frame 418.png" alt="">
-        <img class="picStyle" src="../assets/Frame 417.png" alt="">
-    </div>
+    <div class="imgDiv"></div>
     <div class="btn">
         <div class="option">
             <button class="button-container" @click="() => $router.push('/question')">开始答题</button>
@@ -23,29 +20,17 @@ body {
 }
 
 .imgDiv {
-    position: absolute;
-    width: 100%;
-    height: 100%;
+    position: relative;
+    width: auto;
+    height: 844px;
     left: 0;
     top: 0;
     z-index: -1;
-    margin: 0;
-    padding: 0;
-    display: block;
-}
-
-.imgStyle {
-    display: block;
-    width: 100%;
-    height: 45%;
-    margin: 0;
-    padding: 0;
-}
-
-.picStyle {
-    display: block;
-    width: 100%;
-    height: 55%;
+    background-image: url('../assets/Frame418.png'), url('../assets/Frame417.png');
+    background-size: 390px 402px,390px 455px;
+    background-position: top,bottom;
+    background-attachment: scroll, scroll;
+    background-repeat: no-repeat, no-repeat; 
 }
 
 .btn{
@@ -54,18 +39,19 @@ body {
     display: flex;
     justify-content: center;
     position: absolute; /* 添加定位属性 */
-    bottom: 50px;
+    top: 602px;
+    margin: 0 auto;
 }
 
 .option{
-    width: 120px;
+    width: 158px;
     height: auto;
     display: block;
 }
 
 .button-container{
     margin: 20px;
-    padding: 10px;
+    padding: 10px 30px;
 }
 
 .button-container:hover {
