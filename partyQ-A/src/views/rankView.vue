@@ -1,18 +1,42 @@
 <script setup>
 import Tab from '@/components/tab.vue';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+
+// const fetchRanks = async () => {
+//   try {
+//     const response = await axios.get('');
+//     tabs.value = response.data;
+//   } catch (error) {
+//     console.error('Error fetching tabs:', error);
+//   }
+// };
+
+function fetchRanks() {
+    axios.get('')
+        .then((response) => {
+            if (response.data && response.data.tabs) {
+                tabs.value = response.data.tabs;
+            } else {
+                console.error('响应数据格式不正确');
+            }
+            // // 模拟数据（用于测试）
+        })
+        .catch((error) => {
+            console.error('获取数据失败:', error);
+        })
+};
+
+onMounted(() => {
+    fetchRanks();
+});
 
 const activeTab = ref('Tab1');
 
 const tabs = ref([
-    { id: 'Tab1', name: '当前排行榜' },
-    { id: 'Tab2', name: '往期排行榜' },
+    { id: 'Tab1', name: '当前排行榜', content: { num: 1, username: '用户名', rightPropotion: '123', time: '10:00' } },
+    { id: 'Tab2', name: '往期排行榜', content: { num: 2, username: '用户名', rightPropotion: '123', time: '10:00' } },
 ]);
-
-const data = ref([
-    { id: 1, content: { username: '用户名', rightPropotion: '123', time: '10:00' } },
-    { id: 2, content: { username: '用户名', rightPropotion: '123', time: '10:00' } },
-])
 
 const openTab = (tabId) => {
     activeTab.value = tabId
@@ -38,11 +62,11 @@ const openTab = (tabId) => {
                 <li>用时</li>
             </ul>
         </div>
-        <div v-for="i in data" class="data">
-            <div>{{ i.id }}</div>
-            <div>{{ i.content.username }}</div>
-            <div>{{ i.content.rightPropotion }}</div>
-            <div>{{ i.content.time }}</div>
+        <div v-for="(tab, index) in tabs" :key="index" :class="['data', { active: activeTab === tab.id }]">
+            <div>{{ tab.content.num }}</div>
+            <div>{{ tab.content.username }}</div>
+            <div>{{ tab.content.rightPropotion }}</div>
+            <div>{{ tab.content.time }}</div>
         </div>
     </div>
 

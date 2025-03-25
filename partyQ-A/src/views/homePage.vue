@@ -27,36 +27,31 @@ body {
     top: 0;
     z-index: -1;
     background-image: url('../assets/Frame418.png'), url('../assets/Frame417.png');
-    background-size: 390px 402px,390px 455px;
-    background-position: top,bottom;
+    background-size: 390px 402px, 390px 455px;
+    background-position: top, bottom;
     background-attachment: scroll, scroll;
-    background-repeat: no-repeat, no-repeat; 
+    background-repeat: no-repeat, no-repeat;
 }
 
-.btn{
+.btn {
     width: 100%;
     height: auto;
     display: flex;
     justify-content: center;
-    position: absolute; /* 添加定位属性 */
+    position: absolute;
+    /* 添加定位属性 */
     top: 602px;
     margin: 0 auto;
 }
 
-.option{
+.option {
     width: 158px;
     height: auto;
     display: block;
 }
 
-.button-container{
+.button-container {
     margin: 20px;
     padding: 10px 30px;
-}
-
-.button-container:hover {
-    background-color: #fa1414c5;
-    color: #ffffff;
-    box-shadow: 4px 4px #000;
 }
 </style>

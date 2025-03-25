@@ -1,11 +1,30 @@
 <script setup>
 import Tab from '@/components/tab.vue'
-import { ref } from 'vue';
+import { ref,onMounted } from 'vue';
+import axios from 'axios';
+
+function fetchAllQA() {
+    axios.get('')
+        .then((response) => {
+            if (response.data && response.data.tabs) {
+                tabs.value = response.data.tabs;
+            } else {
+                console.error('响应数据格式不正确');
+            }
+        })
+        .catch((error) => {
+            console.error('获取数据失败:', error);
+        })
+};
+
+onMounted(() => {
+    fetchAllQA();
+});
 
 const activeTab = ref('Tab1');
 
 const tabs = ref([
-    { id: 'Tab1', name: '所有问答', content: { title: '主炮射击技巧', status: 1, questionUnit: '党委', startTime: '1月2日12：00', endTime: '1月5日12：00', } },
+    { id: 'Tab1', name: '所有问答', content: { title: '主炮射击技巧', status: 1, questionUnit: '党委', startTime: '1月2日12：00', endTime: '1月5日12：00', }, },
     { id: 'Tab2', name: '已完成问答', content: { title: '内容2', status: 2, questionUnit: '党委', startTime: '', endTime: '' } },
     { id: 'Tab3', name: '往期问答', content: { title: '内容3', status: 1, questionUnit: '党委', startTime: '', endTime: '' } },
 ]);
@@ -36,7 +55,6 @@ const getStatusText = (status) => {
     <div v-for="(tab, index) in tabs" :key="index" :id="tab.id"
         :class="['tab-content', { active: activeTab === tab.id }]">
         <div class="present">
-
             <div id="first-line">
                 <p id="name">问答名称: {{ tab.content.title }}</p>
                 <p :class="tab.content.status === 1 ? 'status-1' : 'status-2'"> {{ getStatusText(tab.content.status) }}
@@ -119,6 +137,7 @@ const getStatusText = (status) => {
     flex-direction: column;
     padding: 1rem;
     border-radius: 1rem;
+    margin-bottom: 10px;
 }
 
 #first-line {
