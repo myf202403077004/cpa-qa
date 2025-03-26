@@ -130,7 +130,7 @@ const getStatusText = (status) => {
 .present {
     width: 90%;
     height: 125px;
-    border: 1px solid black;
+    border: 1px solid rgba(228, 228, 228, 1);
     font-size: 14px;
     display: flex;
     justify-content: center;
