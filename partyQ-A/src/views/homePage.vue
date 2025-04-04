@@ -3,8 +3,9 @@ import tab from '@/components/tab.vue';
 </script>
 
 <template>
-    <tab />
     <div class="imgDiv"></div>
+    <div class="xx"><img src="../assets/xx.png" alt=""></div>
+    <h1>党建问答</h1>
     <div class="btn">
         <div class="option">
             <button class="button-container" @click="() => $router.push('/question')">开始答题</button>
@@ -19,18 +20,39 @@ body {
     margin: 0;
 }
 
+.xx{
+    width:100%;
+    height: auto;
+    
+    position: absolute;
+    top: 0;
+}
+
+.xx img{
+    width: 111px;
+    height: 38px;
+    padding: 9px;
+    float: right;
+}
+
+h1{
+    font-size: 48px;
+    position: absolute;
+    top: 80px;
+    color: rgba(255, 255, 255, 1);
+    margin-left: 20px;
+}
+
 .imgDiv {
     position: relative;
     width: auto;
-    height: 844px;
-    left: 0;
-    top: 0;
+    height: 932px;
+    background-size: 430px 932px;
     z-index: -1;
-    background-image: url('../assets/Frame418.png'), url('../assets/Frame417.png');
-    background-size: 390px 402px, 390px 455px;
-    background-position: top, bottom;
-    background-attachment: scroll, scroll;
-    background-repeat: no-repeat, no-repeat;
+    background-image: url(../assets/hmpg.png);
+    background-position: top;
+    background-attachment: scroll;
+    background-repeat: no-repeat;
 }
 
 .btn {
@@ -40,7 +62,7 @@ body {
     justify-content: center;
     position: absolute;
     /* 添加定位属性 */
-    top: 602px;
+    top: 615px;
     margin: 0 auto;
 }
 
@@ -53,5 +75,12 @@ body {
 .button-container {
     margin: 20px;
     padding: 10px 30px;
+    border-radius: 20px;
+    width: 138px;
+    height: 52px;
+    border: 0;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.5);
 }
 </style>

@@ -65,19 +65,10 @@ onMounted(() => {
                 </div>
             </div>
             <div class="loginBtnDiv">
-                <div @click="$router.push('/homepage')" class="loginBtn">
+                <button @click="$router.push('/homepage')" class="loginBtn">
                     Login
-                </div>
+                </button>
             </div>
-            <!-- <div class="ORDiv">
-                <div class="line"></div>
-                <div class="OR">OR</div>
-                <div class="line"></div>
-            </div>
-            <div class="signUpDiv">
-                <div class="go">Don't have an account?</div>
-                <div class="fb">Sign up here.</div>
-            </div> -->
         </div>
     </div>
 </template>
@@ -172,7 +163,7 @@ onMounted(() => {
 }
 
 .loginBtnDiv {
-    top: 80px;
+    top: 100px;
     position: relative;
     width: 100%;
     height: 8%;
@@ -185,14 +176,16 @@ onMounted(() => {
 .loginBtn {
     width: auto;
     height: 100%;
-    padding: 0 10px;
+    padding: 0 30px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(225, 51, 15, 1);
     font-weight: bold;
     color: #ffffff;
-    border-radius: 8px;
+    border-radius: 7px;
+    border: 0px solid rgba(0, 0, 0, 0.5);
+    background-color: rgba(225, 51, 15, 1);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
 }
 
 .OR {
