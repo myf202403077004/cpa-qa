@@ -4,7 +4,7 @@ import axios from "axios";
 let isRefreshing = false
 
 const request = axios.create({
-    baseURL: "https://qarfl.rrrexyz.icu/api"
+    baseURL: "https://partyqa.rrrexyz.icu"
 })
 
 const setToken = (access_token, refresh_token) => {
@@ -27,10 +27,10 @@ const login = async (data) => {
     try {
         const response = await request.post(
             "/login", data = data, {
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                }
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
             }
+        }
         )
         setToken(response.data.access_token, response.data.refresh_token)
         console.log(response)
@@ -41,13 +41,13 @@ const login = async (data) => {
 
 request.interceptors.response.use(
     (response) => {
-        if (response.status === 200) {
+        if (response.status == 200) {
             return Promise.resolve(response)
         } else {
             return Promise.reject(response)
         }
     }, (error) => {
-        if (error.response.status === 401) {
+        if (error.response.status == 401) {
             var config = error.config
             if (!isRefreshing) {
                 isRefreshing = true
@@ -85,11 +85,11 @@ request.interceptors.response.use(
 )
 
 const createPost = async () => {
-    try{
+    try {
         const newPost = await request.post('/project')
         console.log(newPost)
         return newPost
-    }catch(error){
+    } catch (error) {
         console.log(error)
     }
 }

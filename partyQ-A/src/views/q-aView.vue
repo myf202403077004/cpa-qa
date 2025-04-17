@@ -1,41 +1,90 @@
 <script setup>
 import Tab from '@/components/tab.vue'
-import { ref,onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import router from '@/router';
+
+const basurl = 'https://partyqa.rrrexyz.icu';
 
 function fetchAllQA() {
-    axios.get('')
+    axios.get(basurl + '/api/user/projects/all')
         .then((response) => {
-            if (response.data && response.data.tabs) {
-                tabs.value = response.data.tabs;
+            if (response.data && response.data.data) {
+                allQA.value = response.data.data;
             } else {
-                console.error('响应数据格式不正确');
+                console.error('响应数据1格式不正确');
             }
         })
         .catch((error) => {
-            console.error('获取数据失败:', error);
+            console.error('获取数据1失败:', error);
+        })
+};
+
+function fetchQA() {
+    axios.get(basurl + '/api/user/projects',{        
+        params: {
+            student_id: '202500996677'  
+        }
+    })
+        .then((response) => {
+            if (response.data && response.data.data) {
+                QA.value = response.data.data;
+            } else {
+                console.error('响应数据2格式不正确');
+            }
+        })
+        .catch((error) => {
+            console.error('获取数据2失败:', error);
         })
 };
 
 onMounted(() => {
     fetchAllQA();
+    fetchQA();
 });
 
 const activeTab = ref('Tab1');
 
 const tabs = ref([
-    { id: 'Tab1', name: '所有问答', content: { title: '主炮射击技巧', status: 1, questionUnit: '党委', startTime: '1月2日12：00', endTime: '1月5日12：00', }, },
-    { id: 'Tab2', name: '已完成问答', content: { title: '内容2', status: 2, questionUnit: '党委', startTime: '', endTime: '' } },
-    { id: 'Tab3', name: '往期问答', content: { title: '内容3', status: 1, questionUnit: '党委', startTime: '', endTime: '' } },
+    { id: 'Tab1', name: '所有问答' },
+    { id: 'Tab2', name: '已完成问答' },
 ]);
+
+const allQA = ref([])
+const QA = ref([])
 
 const openTab = (tabId) => {
     activeTab.value = tabId;
 };
 
+//0：未开始，1：进行中，2：已结束
+// 获取状态文本
 const getStatusText = (status) => {
-    return status === 1 ? '未完成' : '已完成';
-};
+  switch (status) {
+    case 0:
+      return '未开始'
+    case 1:
+      return '进行中'
+    case 2:
+      return '已结束'
+    default:
+      return '未知状态'
+  }
+}
+
+// 获取状态对应的 CSS 类
+const getStatusClass = (status) => {
+  switch (status) {
+    case 0:
+      return 'status0'
+    case 1:
+      return 'status1'
+    case 2:
+      return 'status2'
+    default:
+      return 'status0'
+  }
+}
 </script>
 
 <template>
@@ -44,32 +93,43 @@ const getStatusText = (status) => {
     <!-- 标签栏 -->
     <div class="guide">
         <ul>
-            <li v-for="(tab, index) in tabs" :key="index" :class="['tab-link', { active: activeTab === tab.id }]"
+            <li v-for="(tab, index) in tabs" :key="index" :class="['tab-link', { active: activeTab == tab.id }]"
                 @click="openTab(tab.id)">{{ tab.name }}
             </li>
         </ul>
     </div>
 
-    <!-- 具体问题 -->
-    <!-- class的动态绑定，一个静态的，另一个“active”，即数组语法和对象语法结合。如果写成tabs和question两个数组，而tabs数组要在两个template(俩个v-for)都用，但是一个v-for只能对应一个数组，那就写成一个数组里，里面套大括号 -->
-    <div v-for="(tab, index) in tabs" :key="index" :id="tab.id"
-        :class="['tab-content', { active: activeTab === tab.id }]">
+    <!-- 所有 总的 -->
+    <div v-for="(i, index) in allQA" :key="index" :id="i.id" class="tab-content" v-if="activeTab === 'Tab1'"
+        @click="router.push('/qst')">
         <div class="present">
             <div id="first-line">
-                <p id="name">问答名称: {{ tab.content.title }}</p>
-                <p :class="tab.content.status === 1 ? 'status-1' : 'status-2'"> {{ getStatusText(tab.content.status) }}
-                </p>
+                <div id="name">问答名称: {{ i.name }}</div>
+                <div :class="getStatusClass(i.status)">{{ getStatusText(i.status) }}</div> 
             </div>
-            <!-- 状态绑定一个三元运算符，用来展示未完成和已完成，此处响应式变量为一个自定义函数名。 -->
-            <!-- 要想实现一红一绿两个色，在css里写，那就需要两个class。v-if可以，决定渲染style与否，class里直接写三元运算符最后输出两个 -->
             <div id="second-line">
-                <p>出题单位: {{ tab.content.questionUnit }}</p>
                 <div>
-                    <p>开始时间: {{ tab.content.startTime }}</p>
-                    <p>截止时间: {{ tab.content.endTime }}</p>
+                    <div>开始时间: {{ i.starttime }}</div>
+                    <div>截止时间: {{ i.deadline }}</div>
                 </div>
             </div>
+        </div>
+    </div>
 
+    <!-- 所有已开始项目列表 -->
+    <div v-for="(i, index) in QA" :key="index" :id="i.id" class="tab-content" v-if="activeTab === 'Tab2'"
+        @click="router.push('/qst')">
+        <div class="present">
+            <div id="first-line">
+                <div id="name">问答名称: {{ i.name }}</div>
+                <div :class="getStatusClass(i.status)">{{ getStatusText(i.status) }}</div> 
+            </div>
+            <div id="second-line">
+                <div>
+                    <div>开始时间: {{ i.starttime }}</div>
+                    <div>截止时间: {{ i.deadline }}</div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -96,7 +156,7 @@ const getStatusText = (status) => {
     height: 40px;
     line-height: 40px;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     padding: 0 15px 0 20px;
     cursor: pointer;
@@ -109,7 +169,7 @@ const getStatusText = (status) => {
     border: none;
     outline: none;
     cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
+    transition: 0.3s; 
 }
 
 .tab-link.active {
@@ -118,13 +178,8 @@ const getStatusText = (status) => {
 }
 
 .tab-content {
-    display: none;
     /* 这里设置成none才行 */
     padding: 20px;
-}
-
-.tab-content.active {
-    display: block;
 }
 
 .present {
@@ -159,23 +214,30 @@ const getStatusText = (status) => {
     justify-content: space-between;
 }
 
-#statusP {
-    width: 48px;
-    height: 27px;
-    background-color: aqua;
-}
-
-.status-1 {
-    background-color: rgb(240, 249, 235);
+.status0 {
+    height: 20px;
+    background-color: rgba(244, 244, 245, 1);
     padding: 5px 10px;
     border-radius: 15px;
-    color: rgb(103, 194, 58, 1);
+    color: rgba(199, 201, 204, 1);
+    border: 1px solid rgba(199, 201, 204, 1);
 }
 
-.status-2 {
-    background-color: rgba(254, 240, 240);
+.status1 {
+    height: 20px;
+    line-height: 20px;
+    background-color: rgba(240, 249, 235, 1);
+    color: rgba(103, 194, 58, 1);
+    padding: 5px 10px;
+    border-radius: 15px;
+}
+
+.status2 {
+    height: 20px;
+    line-height: 20px;
+    background-color: rgba(254, 240, 240, 1);
+    padding: 5px 10px;
+    border-radius: 15px;
     color: rgba(245, 108, 108, 1);
-    padding: 5px 10px;
-    border-radius: 15px;
 }
 </style>

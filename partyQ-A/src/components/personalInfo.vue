@@ -1,67 +1,45 @@
-<template>
-    <div v-if="isVisible" class="popup-overlay" @click.self="closePopup">
-        <div class="popup-content" @click.stop>
-            <h2>请选择选项</h2>
-            <div class="options">
-                <div class="column">
-                    <div v-for="province in provinces" :key="province">
-                        <label>
-                            <input type="checkbox" v-model="selectedOptions" :value="province" />
-                            {{ province }}
-                        </label>
-                    </div>
-                </div>
-                <div class="column">
-                    <div v-for="city in cities" :key="city">
-                        <label>
-                            <input type="checkbox" v-model="selectedOptions" :value="city" />
-                            {{ city }}
-                        </label>
-                    </div>
-                </div>
-                <div class="column">
-                    <div v-for="district in districts" :key="district">
-                        <label>
-                            <input type="checkbox" v-model="selectedOptions" :value="district" />
-                            {{ district }}
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="buttons">
-                <button @click="closePopup">取消</button>
-                <button @click="confirmSelection">确定</button>
-            </div>
-        </div>
-    </div>
-</template>
-
 <script setup>
+import axios from 'axios'
 import { defineProps, defineEmits, ref, watch } from 'vue'
+// 选中的选项
+const selectedFacultad = ref('')
+const selectedCurso = ref('')
+const selectedClase = ref('')
+
+const basurl = 'https://partyqa.rrrexyz.icu';
+const party_branch = ref('');
 
 // 定义接收的属性
 const props = defineProps({
     visible: {
         type: Boolean,
         default: false
+    },
+    selectedFacultad: {
+        type: String,
+        default: ''
+    },
+    selectedCurso: {
+        type: String,
+        default: ''
+    },
+    selectedClase: {
+        type: String,
+        default: ''
     }
-})
+});
 
 // 定义触发的自定义事件
-const emit = defineEmits(['update:visible', 'update:selectedOptions'])
+const emit = defineEmits(['update:visible', 'update:selectedFacultad', 'update:selectedCurso', 'update:selectedClase'])
 
 // 定义选项数据
-const provinces = ref(['外国语', '医', '土建', '历史'])
-const cities = ref(['24', '23', '22', '21'])
-const districts = ref(['专业1', '专业2', '专业3', '专业4'])
-
-// 选中的选项
-const selectedOptions = ref([])
+const facultades = ref(['外国语', '医', '土建', '历史'])
+const cursos = ref([24, 23, 22, 21])
+const clases = ref(['专业1', '专业2', '专业3', '专业4'])
 
 // 控制弹出框的显示与隐藏
 const isVisible = ref(props.visible)
 
-// 监听属性变化
 // 监听 visible 属性的变化
 watch(() => props.visible, (newVal) => {
     isVisible.value = newVal
@@ -75,14 +53,67 @@ const closePopup = () => {
 
 // 确认选择
 const confirmSelection = () => {
-    if (selectedOptions.value.length === 3) {
-        emit('update:selectedOptions', selectedOptions.value)
-        closePopup()
+    if (selectedFacultad.value && selectedCurso.value && selectedClase.value) {
+        const partyBranch = `${selectedFacultad.value}学院${selectedCurso.value}级${selectedClase.value}班党支部`;
+        emit('update:selectedFacultad', selectedFacultad.value);
+        emit('update:selectedCurso', selectedCurso.value);
+        emit('update:selectedClase', selectedClase.value);
+        closePopup();
+        axios.post( basurl + '/api/user', {
+            name: "",
+            student_id: "",
+            party_branch: partyBranch,
+        })
+            .then(response => {
+                console.log(response.data);
+            })
+            .catch(error => {
+                console.error('获取数据失败:', error);
+            });
     } else {
-        alert('请选择正确个数选项')
+        alert('请选择正确个数的选项');
     }
-}
+};
 </script>
+
+<template>
+    <div v-if="visible" class="popup-overlay" @click.self="closePopup">
+        <div class="popup-content" @click.stop>
+            <h2>请选择选项</h2>
+            <div class="options">
+                <div class="column">
+                    <div v-for="facultad in facultades" :key="facultad">
+                        <label>
+                            <input type="radio" v-model="selectedFacultad" :value="facultad" name="facultad" />
+                            {{ facultad }}
+                        </label>
+                    </div>
+                </div>
+                <div class="column">
+                    <div v-for="curso in cursos" :key="curso">
+                        <label>
+                            <input type="radio" v-model="selectedCurso" :value="curso" name="curso" />
+                            {{ curso }}
+                        </label>
+                    </div>
+                </div>
+                <div class="column">
+                    <div v-for="clase in clases" :key="clase">
+                        <label>
+                            <input type="radio" v-model="selectedClase" :value="clase" name="clase" />
+                            {{ clase }}
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="buttons">
+                <button @click="closePopup">取消</button>
+                <button @click="confirmSelection">确定</button>
+            </div>
+        </div>
+    </div>
+</template>
+
 
 <style scoped>
 .popup-overlay {

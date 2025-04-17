@@ -1,69 +1,63 @@
 <script setup>
-import tab from '@/components/tab.vue';
 </script>
 
 <template>
-    <div class="imgDiv"></div>
-    <div class="xx"><img src="../assets/xx.png" alt=""></div>
-    <h1>党建问答</h1>
-    <div class="btn">
-        <div class="option">
-            <button class="button-container" @click="() => $router.push('/question')">开始答题</button>
-            <br>
-            <button class="button-container" @click="() => $router.push('/user')">个人中心</button>
+    <div class="imgDiv">
+        <div class="xx"><img src="../assets/xx.png" alt=""></div>
+
+        <h1>党建问答</h1>
+
+        <div class="btn">
+            <div class="option">
+                <button class="button-container" @click="() => $router.push('/qst')">开始答题</button>
+                <button class="button-container" @click="() => $router.push('/user')">个人中心</button>
+            </div>
         </div>
     </div>
+
 </template>
 
 <style>
-body {
-    margin: 0;
+.imgDiv {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    background-image: url(../assets/hmpg.png);
+    background-size: cover;
+    background-position: top right;
+    background-repeat: no-repeat;
 }
 
-.xx{
-    width:100%;
-    height: auto;
-    
+.xx {
     position: absolute;
-    top: 0;
+    top: 1rem;
+    right: 1rem;
 }
 
-.xx img{
+.xx img {
     width: 111px;
     height: 38px;
     padding: 9px;
     float: right;
 }
 
-h1{
-    font-size: 48px;
+h1 {
+    font-size: 2.7rem;
     position: absolute;
-    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 160px;
     color: rgba(255, 255, 255, 1);
-    margin-left: 20px;
-}
-
-.imgDiv {
-    position: relative;
-    width: auto;
-    height: 932px;
-    background-size: 430px 932px;
-    z-index: -1;
-    background-image: url(../assets/hmpg.png);
-    background-position: top;
-    background-attachment: scroll;
-    background-repeat: no-repeat;
 }
 
 .btn {
     width: 100%;
-    height: auto;
     display: flex;
     justify-content: center;
+    height: auto;
     position: absolute;
-    /* 添加定位属性 */
-    top: 615px;
-    margin: 0 auto;
+    bottom: 17vh;
 }
 
 .option {

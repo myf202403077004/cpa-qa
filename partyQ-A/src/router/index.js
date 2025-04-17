@@ -5,7 +5,8 @@ import HomePage from '@/views/homePage.vue'
 import User from '@/views/userView.vue'
 import allQA from '@/views/q-aView.vue'
 import Rank from '@/components/rankView.vue'
-import Question from '@/views/questionView.vue'
+import Qst from '@/views/qstView.vue'
+
 
 
 const router = createRouter({
@@ -37,9 +38,9 @@ const router = createRouter({
       component: allQA
     },
     {
-      path: '/question',
-      name: 'question',
-      component: Question
+      path: '/qst',
+      name: 'qst',
+      component: Qst
     },
   ],
 })

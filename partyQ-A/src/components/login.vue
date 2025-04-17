@@ -88,7 +88,7 @@ onMounted(() => {
 
 .card {
     margin: 0 auto;
-    width: 305px;
+    width: 280px;
     height: 410px;
     min-width: 250px;
     background-color: rgba(255, 255, 255, 0.56);
